@@ -8,6 +8,13 @@ import requests
 
 CHANNEL = [u'我这么美我不能死', u'长腿A杯', u'轻性感', u'你觉得好看的samers',
            u'秀出你的身材', u'S.T.S.B.H.Q', u'DALUK', u'femininity']
+DB_INFO = {
+    'host': "59.110.136.121",
+    'user': "root",
+    'password': ">#hM%K4*",
+    'database': "same",
+    'charset': "utf8"
+}
 ID = {
     u'我这么美我不能死': 1015326,
     u'长腿A杯': 1032823,
