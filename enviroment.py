@@ -1,8 +1,4 @@
 # -*- coding: UTF-8 -*-
-"""
-啊
-"""
-import json
 import random
 import re
 import time
@@ -10,8 +6,29 @@ import time
 import requests
 
 
-INFO = r'C:\Users\root\Pictures\same\document\info.json'
+CHANNEL = [u'我这么美我不能死', u'长腿A杯', u'轻性感', u'你觉得好看的samers',
+           u'秀出你的身材', u'S.T.S.B.H.Q', u'DALUK', u'femininity']
+ID = {
+    u'我这么美我不能死': 1015326,
+    u'长腿A杯': 1032823,
+    u'轻性感': 1033563,
+    u'你觉得好看的samers': 1097342,
+    u'秀出你的身材': 1112266,
+    u'S.T.S.B.H.Q': 1125933,
+    u'DALUK': 1166214,
+    u'femininity': 1388511
+}
 PATH = r'C:\Users\root\Pictures\same\download\\'
+URL = {
+    u'我这么美我不能死': "https://v2.same.com/channel/1015326/senses",
+    u'长腿A杯': "https://v2.same.com/channel/1032823/senses",
+    u'轻性感': "https://v2.same.com/channel/1033563/senses",
+    u'你觉得好看的samers': "https://v2.same.com/channel/1097342/senses",
+    u'秀出你的身材': "https://v2.same.com/channel/1112266/senses",
+    u'S.T.S.B.H.Q': "https://v2.same.com/channel/1125933/senses",
+    u'DALUK': "https://v2.same.com/channel/1166214/senses",
+    u'femininity': "https://v2.same.com/channel/1388511/senses"
+}
 
 
 def download_from_url(url, path):
@@ -20,32 +37,14 @@ def download_from_url(url, path):
         f.write(image.content)
 
 
-def get_channel_info():
-    """
-    :return:{ids{(文件名:id),}, names{文件名1,文件名2], urls(id:url,)}
-    """
-    with open(INFO) as i:
-        megs = json.loads(i.read())
-    i.close()
-    return megs
-
-
-def operate_sql(db, sql):
-    cursor = db.cursor()
-    cursor.execute(sql)
-    db.commit()
-    temp = cursor.fetchall()
-    cursor.close()
-    return temp
-
-
-def pass_502(url):
+def get_same_info(url):
 
     def headers():
 
         def union_id():
             def gen_id(length):
-                chars = ['a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+                chars = ['a', 'b', 'c', 'd', 'e', 'f',
+                         '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
                 array = ''
                 while length is not 0:
                     array += random.choice(chars)
@@ -77,3 +76,20 @@ def pass_502(url):
         time.sleep(0.2)
         response = requests.get(url=url, headers=headers())
     return response
+
+
+def operate_sql(db, sql):
+    cursor = db.cursor()
+    cursor.execute(sql)
+    db.commit()
+    temp = cursor.fetchall()
+    cursor.close()
+    return temp
+
+
+def show(channel_name):
+    if channel_name is 'all':
+        for channel in CHANNEL:
+            print "%-20s  %s" % (channel.encode('gbk'),  URL[channel])
+    else:
+        print channel_name, URL[channel_name.decode('gbk')]
