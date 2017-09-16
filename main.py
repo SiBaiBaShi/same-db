@@ -38,6 +38,9 @@ if __name__ == '__main__':
                         help=u'path，excel保存路径；绝对路径，需加上excel文件名和尾缀'
                         .encode('GBK'))
 
+    parser.add_argument('-bd', nargs='?', default=False,
+                        help=u'build database,建立数据库；需现在数据库中建立相关表和终止id项'
+                        .encode('GBK'))
     parser.add_argument('-ud', nargs='?', const='all', default=False,
                         help=u'update database,更新数据库；无参数则更新所有频道'
                         .encode('GBK'))
@@ -58,6 +61,8 @@ if __name__ == '__main__':
     if args.es:
         excel.get_data(args.es, args.ep)
 
+    if args.bd:
+        index.build(args.bd)
     if args.ud:
         index.update(args.ud)
     if args.uf:
