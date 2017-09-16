@@ -3,7 +3,8 @@
 2017.9.15
 增加下载用户图片信息部分，但无法解析到用户数据，需要再分析应用数据包
 2017.9.16
-可以批量下载特定用户图片，保存路径为默认路径
+1.可以批量下载特定用户图片，保存路径为默认路径
+2.条件语句输入时需自己输入sql结束符“;”
 """
 from multiprocessing import Pool
 import os
@@ -71,7 +72,7 @@ def get_download_info(channel_list, where):
     db = MySQLdb.connect("59.110.136.121", "root", ">#hM%K4*", "same", charset='utf8')
     for i, channel in enumerate(channel_list):
         channel_id = enviroment.ID[channel]
-        sql = 'select id, user_id, photo from {table_name} {where};' \
+        sql = 'select id, user_id, photo from {table_name} {where}' \
             .format(table_name='c' + str(channel_id),
                     where=where)
         total_download_info[channel] = enviroment.operate_sql(db, sql)
