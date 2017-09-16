@@ -27,7 +27,7 @@ def download_by_user(user_list):
         for text in response.json()['data']['results']:
             total_info.append([text['id'], text['channel_id'], text['photo']])
         name = response.json()['data']['results'][0]['user']['username'].encode('gbk', 'ignore')
-        path = enviroment.USER_PATH + name + '-' + user_id + '\\'
+        path = enviroment.USER_PATH + user_id + '-' + name + '\\'
         download(total_info, path)
 
 
