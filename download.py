@@ -1,10 +1,31 @@
 # _*_ coding: UTF-8 _*_
+"""
+2017.9.15
+增加下载用户图片信息部分，但无法解析到用户数据，需要再分析应用数据包
+2017.9.16
+可以批量下载特定用户图片，保存路径为默认路径
+"""
 from multiprocessing import Pool
 import os
 
 import MySQLdb
 
 import enviroment
+
+
+def download_by_user(user_list):
+    for i, user_id in enumerate(user_list):
+        total_info = []
+        url = 'https://v2.same.com/user/' + user_id + '/senses'
+        response = enviroment.get_same_info(url)
+        while 'next' in response.json()['data']:
+            for text in response.json()['data']['results']:
+                total_info.append([text['id'], text['channel_id'], text['photo']])
+        for text in response.json()['data']['results']:
+            total_info.append([text['id'], text['channel_id'], text['photo']])
+        name = response.json()['data']['results'][0]['user']['username'].encode('gbk', 'ignore')
+        path = enviroment.USER_PATH + name + '-' + user_id + '\\'
+        download(total_info, path)
 
 
 def download_by_channel(c, w, p):

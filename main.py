@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
-# 处理输入指令
+"""
+2017.9.16
+增加下载特定用户图片功能，命令行提示符为“-du”，可批量下载，图片保存路径固定为environment.USER_PATH
+"""
 import argparse
 
 import download
@@ -21,8 +24,11 @@ if __name__ == '__main__':
     parser.add_argument('-dr', nargs='?', default='',
                         help=u'requirement，sql过滤条件；与sql条件语句完全一致'
                         .encode('GBK'))
+    parser.add_argument('-du', nargs='*', default=[],
+                        help=u'user，用户id'
+                        .encode('GBK'))
     parser.add_argument('-dp', nargs='*', default=[],
-                        help=u'path,保存路径；绝对路径，需有双引号'
+                        help=u'path,保存路径；绝对路径，需有双引号，用户图片有默认路径'
                         .encode('GBK'))
 
     parser.add_argument('-es', nargs='?', default='',
@@ -46,6 +52,8 @@ if __name__ == '__main__':
 
     if args.dc:
         download.download_by_channel(args.dc, args.dr, args.dp)
+    if args.du:
+        download.download_by_user(args.du)
 
     if args.es:
         excel.get_data(args.es, args.ep)

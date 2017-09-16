@@ -1,4 +1,8 @@
 # -*- coding: UTF-8 -*-
+"""
+2017.9.16
+增加用户图片默认保存路径USER_PATH
+"""
 import random
 import re
 import time
@@ -26,6 +30,7 @@ ID = {
     u'femininity': 1388511
 }
 PATH = r'C:\Users\root\Pictures\same\download\\'
+USER_PATH = r'C:\Users\root\Pictures\same\user\\'
 URL = {
     u'我这么美我不能死': "https://v2.same.com/channel/1015326/senses",
     u'长腿A杯': "https://v2.same.com/channel/1032823/senses",
