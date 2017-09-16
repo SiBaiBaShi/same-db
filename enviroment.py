@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 2017.9.16
-增加用户图片默认保存路径USER_PATH
+1.增加用户图片默认保存路径USER_PATH
+2.默认更新频道删除“轻性感”
 """
 import random
 import re
@@ -10,7 +11,7 @@ import time
 import requests
 
 
-CHANNEL = [u'我这么美我不能死', u'长腿A杯', u'轻性感', u'你觉得好看的samers',
+CHANNEL = [u'我这么美我不能死', u'长腿A杯', u'你觉得好看的samers',
            u'秀出你的身材', u'S.T.S.B.H.Q', u'DALUK', u'femininity']
 DB_INFO = {
     'host': "59.110.136.121",
