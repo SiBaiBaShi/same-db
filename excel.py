@@ -14,7 +14,10 @@ def get_data(sql, path):
     data = enviroment.operate_sql(db, sql)
     print 'row : ', len(data), '   column :  ', len(data[0])
 
-    columns = sql.split('from')[0].lstrip('select').replace(' ', '').split(',')
+    columns = sql.lower().split('from')[0].lstrip('select').replace(' ', '').split(',')
+    for i in range(len(columns)):
+        if 'as' in columns[i]:
+            columns[i] = columns[i].split('as')[1].lstrip('\"').rstrip('\"')
 
     input_excel(data, columns, path)
 
