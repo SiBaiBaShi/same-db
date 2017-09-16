@@ -3,6 +3,7 @@
 2017.9.16
 1.增加用户图片默认保存路径USER_PATH
 2.默认更新频道删除“轻性感”
+3.增加“这里只有帅哥美女”频道信息
 """
 import random
 import re
@@ -11,8 +12,10 @@ import time
 import requests
 
 
-CHANNEL = [u'我这么美我不能死', u'长腿A杯', u'你觉得好看的samers',
-           u'秀出你的身材', u'S.T.S.B.H.Q', u'DALUK', u'femininity']
+PATH = r'C:\Users\root\Pictures\same\download\\'
+USER_PATH = r'C:\Users\root\Pictures\same\user\\'
+CHANNEL = [u'我这么美我不能死', u'长腿A杯', u'你觉得好看的samers', u'秀出你的身材',
+           u'S.T.S.B.H.Q', u'这里都是帅哥美女', u'DALUK', u'femininity']
 DB_INFO = {
     'host': "59.110.136.121",
     'user': "root",
@@ -27,11 +30,10 @@ ID = {
     u'你觉得好看的samers': 1097342,
     u'秀出你的身材': 1112266,
     u'S.T.S.B.H.Q': 1125933,
+    u'这里都是帅哥美女': 1151333,
     u'DALUK': 1166214,
     u'femininity': 1388511
 }
-PATH = r'C:\Users\root\Pictures\same\download\\'
-USER_PATH = r'C:\Users\root\Pictures\same\user\\'
 URL = {
     u'我这么美我不能死': "https://v2.same.com/channel/1015326/senses",
     u'长腿A杯': "https://v2.same.com/channel/1032823/senses",
@@ -39,6 +41,7 @@ URL = {
     u'你觉得好看的samers': "https://v2.same.com/channel/1097342/senses",
     u'秀出你的身材': "https://v2.same.com/channel/1112266/senses",
     u'S.T.S.B.H.Q': "https://v2.same.com/channel/1125933/senses",
+    u'这里都是帅哥美女': "https://v2.same.com/channel/1151333/senses",
     u'DALUK': "https://v2.same.com/channel/1166214/senses",
     u'femininity': "https://v2.same.com/channel/1388511/senses"
 }
