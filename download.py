@@ -15,13 +15,15 @@ import enviroment
 
 
 def download_by_user(user_list):
-    for i, user_id in enumerate(user_list):
+    for user_id in user_list:
         total_info = []
         url = 'https://v2.same.com/user/' + user_id + '/senses'
         response = enviroment.get_same_info(url)
         while 'next' in response.json()['data']:
             for text in response.json()['data']['results']:
                 total_info.append([text['id'], text['channel_id'], text['photo']])
+            next_url = 'https://v2.same.com' + response.json()['data']['next']
+            response = enviroment.get_same_info(next_url)
         for text in response.json()['data']['results']:
             total_info.append([text['id'], text['channel_id'], text['photo']])
         name = response.json()['data']['results'][0]['user']['username'].encode('gbk', 'ignore')
