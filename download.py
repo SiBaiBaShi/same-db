@@ -5,6 +5,8 @@
 2017.9.16
 1.可以批量下载特定用户图片，保存路径为默认路径
 2.条件语句输入时需自己输入sql结束符“;”
+2017.9.17
+将进程池重新改为CPU核数4
 """
 from multiprocessing import Pool
 import os
@@ -87,7 +89,7 @@ def download(download_info, path):
         print 'build path = ' + path
         os.makedirs(path)
 
-    pool = Pool(5)
+    pool = Pool(4)
     temp_path = path
     for image_info in download_info:
         path = r'{root_path}{id}same{user_id}.jpg'\
