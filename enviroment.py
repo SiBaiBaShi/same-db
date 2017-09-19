@@ -57,10 +57,10 @@ URL = {
     u'短发控': "https://v2.same.com/channel/1057301/senses",
     u'你觉得好看的samers': "https://v2.same.com/channel/1097342/senses",
     u'秀出你的身材': "https://v2.same.com/channel/1112266/senses",
-    u'S.T.S.B.H.Q': "https://v2.same.com/channel/1125933/senses?offset=53271752",
+    u'S.T.S.B.H.Q': "https://v2.same.com/channel/1125933/senses",
     u'晨间少女赏味期': "https://v2.same.com/channel/1129604/senses",
-    u'这里只有帅哥美女': "https://v2.same.com/channel/1151333/senses?offset=28224622",
-    u'DALUK': "https://v2.same.com/channel/1166214/senses?offset=65280361",
+    u'这里只有帅哥美女': "https://v2.same.com/channel/1151333/senses",
+    u'DALUK': "https://v2.same.com/channel/1166214/senses",
     u'femininity': "https://v2.same.com/channel/1388511/senses"
 }
 
