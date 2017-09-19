@@ -7,6 +7,9 @@
 2017.9.18
 1.增加“晨间少女赏味期”和“短发控”频道信息
 2.operate_sql函数增加出错控制
+2017.9.19
+1.去除operate_sql函数的差错控制
+2.新增获取预设信息的get_info函数
 """
 import json
 import random
@@ -120,20 +123,9 @@ def get_same_info(url):
 
 
 def operate_sql(db, sql):
-    try:
-        cursor = db.cursor()
-        cursor.execute(sql)
-        db.commit()
-        temp = cursor.fetchall()
-        cursor.close()
-        return temp
-    except:
-        print sql.decode('utf-8').encode('gbk', 'ignore')
-
-
-def show(channel_name):
-    if channel_name is 'all':
-        for channel in CHANNEL:
-            print "%-20s  %s" % (channel.encode('gbk'),  URL[channel])
-    else:
-        print channel_name, URL[channel_name.decode('gbk')]
+    cursor = db.cursor()
+    cursor.execute(sql)
+    db.commit()
+    temp = cursor.fetchall()
+    cursor.close()
+    return temp

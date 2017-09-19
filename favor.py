@@ -22,7 +22,7 @@ def get_favor_list(path):
     for files in os.listdir(path):
         if os.path.isdir(path+'\\'+files):
             for jpg in os.listdir(path+'\\'+files):
-                write_favor(enviroment.ID[files.decode('gbk')],
+                write_favor(enviroment.get_info('ID')[files.decode('gbk')],
                             jpg.split('same')[0] if 'same' in jpg else jpg.rstrip('.jpg'), db)
                 now += 1
                 print jpg, now, total

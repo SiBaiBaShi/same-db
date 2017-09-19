@@ -6,11 +6,11 @@ import enviroment
 
 
 def get_data(sql, path):
-    db = MySQLdb.connect(enviroment.DB_INFO['host'],
-                         enviroment.DB_INFO['user'],
-                         enviroment.DB_INFO['password'],
-                         enviroment.DB_INFO['database'],
-                         charset=enviroment.DB_INFO['charset'])
+    db = MySQLdb.connect(enviroment.get_info('DB_INFO')['host'],
+                         enviroment.get_info('DB_INFO')['user'],
+                         enviroment.get_info('DB_INFO')['password'],
+                         enviroment.get_info('DB_INFO')['database'],
+                         charset=enviroment.get_info('DB_INFO')['charset'])
     data = enviroment.operate_sql(db, sql)
     print 'row : ', len(data), '   column :  ', len(data[0])
 

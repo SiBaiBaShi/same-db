@@ -29,7 +29,7 @@ def download_by_user(user_list):
         for text in response.json()['data']['results']:
             total_info.append([text['id'], text['channel_id'], text['photo']])
         name = response.json()['data']['results'][0]['user']['username'].encode('gbk', 'ignore')
-        path = enviroment.USER_PATH + user_id + '-' + name + '\\'
+        path = enviroment.get_info('USER_PATH') + user_id + '-' + name + '\\'
         download(total_info, path)
 
 
@@ -48,7 +48,7 @@ def download_by_channel(c, w, p):
         for channel in c:
             channel_list.append(channel.decode('gbk'))
     else:
-        channel_list = enviroment.CHANNEL
+        channel_list = enviroment.get_info('CHANNEL')
 
     if p:
         for path in p:
@@ -60,7 +60,8 @@ def download_by_channel(c, w, p):
                 temp_w = w.replace('<', 'smaller')
             if '>' in w:
                 temp_w = w.replace('>', 'bigger')
-            path_list.append(enviroment.PATH + temp_w + '\\' + channel.encode('gbk') + '\\')
+            path_list.append(enviroment.get_info('PATH') + temp_w + '\\'
+                             + channel.encode('gbk') + '\\')
 
     total_download_info = get_download_info(channel_list, w)
 
@@ -75,7 +76,7 @@ def get_download_info(channel_list, where):
     total_download_info = {}
     db = MySQLdb.connect("59.110.136.121", "root", ">#hM%K4*", "same", charset='utf8')
     for i, channel in enumerate(channel_list):
-        channel_id = enviroment.ID[channel]
+        channel_id = enviroment.get_info('ID')[channel]
         sql = 'select id, user_id, photo from {table_name} {where}' \
             .format(table_name='c' + str(channel_id),
                     where=where)
