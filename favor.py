@@ -25,7 +25,7 @@ def get_favor_list(path):
                 write_favor(enviroment.get_info('ID')[files.decode('gbk')],
                             jpg.split('same')[0] if 'same' in jpg else jpg.rstrip('.jpg'), db)
                 now += 1
-                print jpg, now, total
+                print '%-30s %-5d %-5d' % (jpg, now, total)
     db.close()
 
 
