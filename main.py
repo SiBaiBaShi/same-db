@@ -2,14 +2,16 @@
 """
 2017.9.16
 增加下载特定用户图片功能，命令行提示符为“-du”，可批量下载，图片保存路径固定为environment.USER_PATH
+2017.9.19
+增加预设频道信息的增删改查功能
 """
 import argparse
 
 import download
-import enviroment
 import excel
 import favor
 import index
+import info
 
 
 if __name__ == '__main__':
@@ -48,8 +50,17 @@ if __name__ == '__main__':
                         help=u'favor，更改favor值；文件夹绝对路径，需有双引号'
                         .encode('GBK'))
 
-    parser.add_argument('-sd', nargs='?', const='all', default=False,
-                        help=u'show default,显示预设频道信息；无参数则显示所有频道'
+    parser.add_argument('-si', nargs='?', const='all', default=False,
+                        help=u'show info,显示预设频道信息；无参数则显示所有频道'
+                        .encode('GBK'))
+    parser.add_argument('-ai', nargs='?', default=False,
+                        help=u'add,添加预设频道信息；输入频道id'
+                        .encode('GBK'))
+    parser.add_argument('-di', nargs='?', default=False,
+                        help=u'delete,删除预设频道信息；输入频道名'
+                        .encode('GBK'))
+    parser.add_argument('-mi', nargs='*', default=False,
+                        help=u'modify,修改预设路径信息；预设信息 新路径'
                         .encode('GBK'))
     args = parser.parse_args()
 
@@ -68,5 +79,11 @@ if __name__ == '__main__':
     if args.uf:
         favor.get_favor_list(args.uf)
 
-    if args.sd:
-        enviroment.show(args.sd)
+    if args.si:
+        info.show(args.si)
+    if args.ai:
+        info.add(args.ai)
+    if args.di:
+        info.delete(args.di)
+    if args.mi:
+        info.modify(args.mi)
