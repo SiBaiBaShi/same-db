@@ -39,7 +39,7 @@ if __name__ == '__main__':
                         .encode('GBK'))
 
     parser.add_argument('-bd', nargs='?', default=False,
-                        help=u'build database,建立数据库；需现在数据库中建立相关表和终止id项'
+                        help=u'build database,建立数据库'
                         .encode('GBK'))
     parser.add_argument('-ud', nargs='?', const='all', default=False,
                         help=u'update database,更新数据库；无参数则更新所有频道'

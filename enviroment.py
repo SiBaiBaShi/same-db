@@ -8,6 +8,7 @@
 1.增加“晨间少女赏味期”和“短发控”频道信息
 2.operate_sql函数增加出错控制
 """
+import json
 import random
 import re
 import time
@@ -15,6 +16,7 @@ import time
 import requests
 
 
+INFO = r'C:\Users\root\Pictures\same\document\info.json'
 PATH = r'C:\Users\root\Pictures\same\download\\'
 USER_PATH = r'C:\Users\root\Pictures\same\user\\'
 CHANNEL = [u'我这么美我不能死',
@@ -27,7 +29,6 @@ CHANNEL = [u'我这么美我不能死',
            u'这里只有帅哥美女',
            u'DALUK',
            u'femininity']
-# u'足控只是会欣赏美',
 DB_INFO = {
     'host': "59.110.136.121",
     'user': "root",
@@ -69,6 +70,12 @@ def download_from_url(url, path):
     image = requests.get(url)
     with open(path, 'wb') as f:
         f.write(image.content)
+
+
+def get_info(key):
+    with open(INFO) as f:
+        info = json.loads(f.read())
+    return info[key]
 
 
 def get_same_info(url):
