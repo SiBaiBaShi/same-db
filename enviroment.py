@@ -3,20 +3,24 @@
 2017.9.16
 1.增加用户图片默认保存路径USER_PATH
 2.默认更新频道删除“轻性感”
-3.增加“这里只有帅哥美女”频道信息
+3.新增“这里只有帅哥美女”频道
 2017.9.18
-1.增加“晨间少女赏味期”和“短发控”频道信息
+1.新增“晨间少女赏味期”和“短发控”频道
 2.operate_sql函数增加出错控制
 2017.9.19
 1.去除operate_sql函数的差错控制
 2.新增获取预设信息的get_info函数
+3.新增“足控只是会欣赏美”、“比太阳还温暖的是你的笑”、“Masker-”和“单马尾即是正义_”频道
+2017.9.20
+1.增加operate_sql函数有关MySQL的异常处理
+2.增加get_same_info函数requests请求的异常处理
 """
 import json
 import random
-import re
 import time
 
 import requests
+import MySQLdb
 
 
 INFO = r'C:\Users\root\Pictures\same\document\info.json'
@@ -115,17 +119,32 @@ def get_same_info(url):
         }
         return header
 
-    response = requests.get(url=url, headers=headers())
-    while re.search('502 Bad Gateway', response.content) is not None:
-        time.sleep(0.2)
-        response = requests.get(url=url, headers=headers())
-    return response
+    status = 1
+    while status:
+        try:
+            response = requests.get(url=url, headers=headers())
+        except requests.ConnectionError, e:
+            print e
+            time.sleep(60)
+        except requests.HTTPError, e:
+            print e
+            time.sleep(0.1)
+        else:
+            return response
 
 
 def operate_sql(db, sql):
-    cursor = db.cursor()
-    cursor.execute(sql)
-    db.commit()
-    temp = cursor.fetchall()
-    cursor.close()
-    return temp
+    try:
+        cursor = db.cursor()
+        cursor.execute(sql)
+        db.commit()
+        temp = cursor.fetchall()
+        cursor.close()
+        return temp
+    except MySQLdb.Error, e:
+        try:
+            print "Error %d:%s" % (e.args[0], e.args[1])
+            print sql
+        except IndexError:
+            print "MySQL Error:%s" % str(e)
+            print sql
