@@ -34,16 +34,17 @@ def delete(channel_name):
         channel = channel_name.decode('GBK')  # 频道名
         if channel in info['URL']:
             info['URL'].pop(channel)
-        if channel in info['names']:
+        if channel in info['CHANNEL']:
             info['CHANNEL'].remove(channel)
         if channel in info['ID']:
             info['ID'].pop(channel)
     except KeyError:
-        print '无此频道'.encode('gbk')
+        print u'无此频道'.encode('gbk')
     else:
         with open(enviroment.INFO, 'w') as f:
             f.write(json.dumps(info))
         f.close()
+        print u'已删除'.encode('gbk')
 
 
 def modify(meg):
