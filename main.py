@@ -17,7 +17,6 @@ import info
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(usage='python %(prog)s [options]',
                                      description=u'same应用图片下载\n'
-                                                 u'默认保存于C:\\Users\\root\Pictures\same\download\\'
                                      .encode('GBK'),
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-dc', nargs='*', default=[],
