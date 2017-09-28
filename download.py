@@ -7,6 +7,10 @@
 2.条件语句输入时需自己输入sql结束符“;”
 2017.9.17
 将进程池重新改为CPU核数4
+2017.9.28
+1.解决文件编码问题，可以创建中文文件夹
+2.文件创建名排除Windows保留字符
+3.输入“all”即可以指定下载所有频道数据
 """
 from multiprocessing import Pool
 import os
@@ -44,11 +48,11 @@ def download_by_channel(c, w, p):
     channel_list = []
     path_list = []
 
-    if c:
+    if c == ['all']:
+        channel_list = enviroment.get_info('CHANNEL')
+    else:
         for channel in c:
             channel_list.append(channel.decode('gbk'))
-    else:
-        channel_list = enviroment.get_info('CHANNEL')
 
     if p:
         for path in p:
@@ -57,11 +61,17 @@ def download_by_channel(c, w, p):
         for channel in channel_list:
             temp_w = w
             if '<' in w:
-                temp_w = w.replace('<', 'smaller')
+                temp_w = temp_w.replace('<', 'smaller')
             if '>' in w:
-                temp_w = w.replace('>', 'bigger')
+                temp_w = temp_w.replace('>', 'bigger')
+            if '/' in w:
+                temp_w = temp_w.replace('/', 'divide')
+            if '*' in w:
+                temp_w = temp_w.replace('*', 'multiply')
+            if ':' in w:
+                temp_w = temp_w.replace(':', 'ratio')
             path_list.append(enviroment.get_info('PATH') + temp_w + '\\'
-                             + channel.encode('gbk') + '\\')
+                             + channel + '\\')
 
     total_download_info = get_download_info(channel_list, w)
 
@@ -85,6 +95,7 @@ def get_download_info(channel_list, where):
 
 
 def download(download_info, path):
+    path = path.encode('gbk')
     is_exists = os.path.exists(path)
     if not is_exists:
         print 'build path = ' + path
