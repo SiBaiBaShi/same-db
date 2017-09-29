@@ -11,6 +11,8 @@
 1.解决文件编码问题，可以创建中文文件夹
 2.文件创建名排除Windows保留字符
 3.输入“all”即可以指定下载所有频道数据
+2017.9.29
+创建用户图片保存文件夹也可以使用中文名
 """
 from multiprocessing import Pool
 import os
@@ -32,7 +34,7 @@ def download_by_user(user_list):
             response = enviroment.get_same_info(next_url)
         for text in response.json()['data']['results']:
             total_info.append([text['id'], text['channel_id'], text['photo']])
-        name = response.json()['data']['results'][0]['user']['username'].encode('gbk', 'ignore')
+        name = response.json()['data']['results'][0]['user']['username']
         path = enviroment.get_info('USER_PATH') + user_id + '-' + name + '\\'
         download(total_info, path)
 
