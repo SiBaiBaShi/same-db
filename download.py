@@ -78,7 +78,7 @@ def download_by_channel(c, w, p):
     total_download_info = get_download_info(channel_list, w)
 
     for channel in channel_list:
-        print "%-20s  %d" % (channel.encode('gbk'), len(total_download_info[channel]))
+        print "%-24s  %d" % (channel.encode('gbk'), len(total_download_info[channel]))
 
     for i, channel in enumerate(channel_list):
         download(total_download_info[channel], path_list[i])
@@ -97,7 +97,7 @@ def get_download_info(channel_list, where):
 
 
 def download(download_info, path):
-    path = path.encode('gbk')
+    path = path.encode('gbk', 'ignore')
     is_exists = os.path.exists(path)
     if not is_exists:
         print 'build path = ' + path
