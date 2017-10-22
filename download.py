@@ -29,7 +29,8 @@ def download_by_user(user_list):
         response = enviroment.get_same_info(url)
         while 'next' in response.json()['data']:
             for text in response.json()['data']['results']:
-                total_info.append([text['id'], text['channel_id'], text['photo']])
+                if text['likes'] > 30:
+                    total_info.append([text['id'], text['channel_id'], text['photo']])
             next_url = 'https://v2.same.com' + response.json()['data']['next']
             response = enviroment.get_same_info(next_url)
         for text in response.json()['data']['results']:
