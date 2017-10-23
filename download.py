@@ -13,6 +13,8 @@
 3.输入“all”即可以指定下载所有频道数据
 2017.9.29
 创建用户图片保存文件夹也可以使用中文名
+2017.10.23
+设置文件保存路径最多100个字符
 """
 from multiprocessing import Pool
 import os
@@ -73,7 +75,7 @@ def download_by_channel(c, w, p):
                 temp_w = temp_w.replace('*', 'multiply')
             if ':' in w:
                 temp_w = temp_w.replace(':', 'ratio')
-            path_list.append(enviroment.get_info('PATH') + temp_w + '\\'
+            path_list.append(enviroment.get_info('PATH') + temp_w[0:99] + '\\'
                              + channel + '\\')
 
     total_download_info = get_download_info(channel_list, w)
