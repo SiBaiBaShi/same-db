@@ -16,10 +16,8 @@ def add(channel_id):
         info = json.loads(f.read())
     f.close()
     info['ID'][channel_name] = int(channel_id)
-    info['URL'][channel_name] = 'https://v2.same.com/channel/' + channel_id + '/senses'
     info['CHANNEL'].append(channel_name)
-    print channel_name.encode('gbk', 'ignore'), info['ID'][channel_name], \
-        '\n', info['URL'][channel_name]
+    print channel_name.encode('gbk', 'ignore'), info['ID'][channel_name]
 
     with open(enviroment.INFO, 'w') as f:
         f.write(json.dumps(info))
@@ -32,8 +30,6 @@ def delete(channel_name):
     f.close()
     try:
         channel = channel_name.decode('GBK')  # 频道名
-        if channel in info['URL']:
-            info['URL'].pop(channel)
         if channel in info['CHANNEL']:
             info['CHANNEL'].remove(channel)
         if channel in info['ID']:
