@@ -26,10 +26,15 @@ def get_favor_list(path):
     for files in os.listdir(path):
         if os.path.isdir(path+'\\'+files):
             for jpg in os.listdir(path+'\\'+files):
-                write_favor(enviroment.get_info('ID')[files.decode('gbk')],
-                            jpg.split('same')[0] if 'same' in jpg else jpg.rstrip('.jpg'), db)
-                now += 1
-                print '%-30s %-5d %-5d' % (jpg, now, total)
+                try:
+                    write_favor(enviroment.get_info('ID')[files.decode('gbk')],
+                                jpg.split('same')[0] if 'same' in jpg else jpg.rstrip('.jpg'), db)
+                except KeyError:
+                    write_favor(enviroment.get_info('CLOSED')[files.decode('gbk')],
+                                jpg.split('same')[0] if 'same' in jpg else jpg.rstrip('.jpg'), db)
+                finally:
+                    now += 1
+                    print '%-30s %-5d %-5d' % (jpg, now, total)
     db.close()
 
 
