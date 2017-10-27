@@ -54,7 +54,7 @@ def download_by_channel(c, w, p):
     path_list = []
 
     if c == ['all']:
-        channel_list = enviroment.get_info('CHANNEL')
+        channel_list = enviroment.get_info('ID').keys() + enviroment.get_info('CLOSED').keys()
     else:
         for channel in c:
             channel_list.append(channel.decode('gbk'))
@@ -89,13 +89,21 @@ def download_by_channel(c, w, p):
 
 def get_download_info(channel_list, where):
     total_download_info = {}
-    db = MySQLdb.connect("59.110.136.121", "root", ">#hM%K4*", "same", charset='utf8')
+    db = MySQLdb.connect(enviroment.get_info('DB_INFO')['host'],
+                         enviroment.get_info('DB_INFO')['user'],
+                         enviroment.get_info('DB_INFO')['password'],
+                         enviroment.get_info('DB_INFO')['database'],
+                         charset=enviroment.get_info('DB_INFO')['charset'])
     for i, channel in enumerate(channel_list):
-        channel_id = enviroment.get_info('ID')[channel]
-        sql = 'select id, user_id, photo from {table_name} {where}' \
-            .format(table_name='c' + str(channel_id),
-                    where=where)
-        total_download_info[channel] = enviroment.operate_sql(db, sql)
+        try:
+            channel_id = enviroment.get_info('ID')[channel]
+        except KeyError:
+            channel_id = enviroment.get_info('CLOSED')[channel]
+        finally:
+            sql = 'select id, user_id, photo from {table_name} {where}' \
+                .format(table_name='c' + str(channel_id),
+                        where=where)
+            total_download_info[channel] = enviroment.operate_sql(db, sql)
     return total_download_info
 
 

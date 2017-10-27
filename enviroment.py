@@ -24,53 +24,6 @@ import MySQLdb
 
 
 INFO = r'C:\Users\root\Pictures\same\document\info.json'
-PATH = r'C:\Users\root\Pictures\same\download\\'
-USER_PATH = r'C:\Users\root\Pictures\same\user\\'
-CHANNEL = [u'我这么美我不能死',
-           u'长腿A杯',
-           u'短发控',
-           u'你觉得好看的samers',
-           u'秀出你的身材',
-           u'S.T.S.B.H.Q',
-           u'晨间少女赏味期',
-           u'这里只有帅哥美女',
-           u'DALUK',
-           u'femininity']
-DB_INFO = {
-    'host': "59.110.136.121",
-    'user': "root",
-    'password': ">#hM%K4*",
-    'database': "same",
-    'charset': "utf8"
-}
-ID = {
-    u'足控只是会欣赏美': 1011855,
-    u'我这么美我不能死': 1015326,
-    u'长腿A杯': 1032823,
-    u'轻性感': 1033563,
-    u'短发控': 1057301,
-    u'你觉得好看的samers': 1097342,
-    u'秀出你的身材': 1112266,
-    u'S.T.S.B.H.Q': 1125933,
-    u'晨间少女赏味期': 1129604,
-    u'这里只有帅哥美女': 1151333,
-    u'DALUK': 1166214,
-    u'femininity': 1388511
-}
-URL = {
-    u'足控只是会欣赏美': "https://v2.same.com/channel/1011855/senses",
-    u'我这么美我不能死': "https://v2.same.com/channel/1015326/senses",
-    u'长腿A杯': "https://v2.same.com/channel/1032823/senses",
-    u'轻性感': "https://v2.same.com/channel/1033563/senses",
-    u'短发控': "https://v2.same.com/channel/1057301/senses",
-    u'你觉得好看的samers': "https://v2.same.com/channel/1097342/senses",
-    u'秀出你的身材': "https://v2.same.com/channel/1112266/senses",
-    u'S.T.S.B.H.Q': "https://v2.same.com/channel/1125933/senses",
-    u'晨间少女赏味期': "https://v2.same.com/channel/1129604/senses",
-    u'这里只有帅哥美女': "https://v2.same.com/channel/1151333/senses",
-    u'DALUK': "https://v2.same.com/channel/1166214/senses",
-    u'femininity': "https://v2.same.com/channel/1388511/senses"
-}
 
 
 def download_from_url(url, path):

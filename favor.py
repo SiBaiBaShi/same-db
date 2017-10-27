@@ -18,7 +18,11 @@ def get_favor_list(path):
         if os.path.isdir(path+'\\'+files):
             total += len(os.listdir(path+'\\'+files))
 
-    db = MySQLdb.connect("59.110.136.121", "root", ">#hM%K4*", "same", charset='utf8')
+    db = MySQLdb.connect(enviroment.get_info('DB_INFO')['host'],
+                         enviroment.get_info('DB_INFO')['user'],
+                         enviroment.get_info('DB_INFO')['password'],
+                         enviroment.get_info('DB_INFO')['database'],
+                         charset=enviroment.get_info('DB_INFO')['charset'])
     for files in os.listdir(path):
         if os.path.isdir(path+'\\'+files):
             for jpg in os.listdir(path+'\\'+files):

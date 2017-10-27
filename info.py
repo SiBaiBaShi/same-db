@@ -16,12 +16,24 @@ def add(channel_id):
         info = json.loads(f.read())
     f.close()
     info['ID'][channel_name] = int(channel_id)
-    info['CHANNEL'].append(channel_name)
     print channel_name.encode('gbk', 'ignore'), info['ID'][channel_name]
 
     with open(enviroment.INFO, 'w') as f:
         f.write(json.dumps(info))
     f.close()
+
+
+def change(channel_name):
+    with open(enviroment.INFO) as f:
+        info = json.loads(f.read())
+    f.close()
+
+    info['CLOSED'][channel_name] = info['ID'][channel_name]
+    with open(enviroment.INFO, 'w') as f:
+        f.write(json.dumps(info))
+    f.close()
+
+    delete(channel_name)
 
 
 def delete(channel_name):
@@ -30,8 +42,6 @@ def delete(channel_name):
     f.close()
     try:
         channel = channel_name.decode('GBK')  # 频道名
-        if channel in info['CHANNEL']:
-            info['CHANNEL'].remove(channel)
         if channel in info['ID']:
             info['ID'].pop(channel)
     except KeyError:
@@ -65,9 +75,12 @@ def show(channel_name):
         print "%-24s  %s" % ('INFO', info['INFO'])
         print "%-24s  %s" % ('PATH', info['PATH'])
         print "%-24s  %s" % ('USER_PATH', info['USER_PATH'])
-        print '\n'
-        for name in info['ID'].items():
-            print '\n', "%-24s  %d" % (name[0].encode('GBK'), info['ID'][name[0]])
+        print u'\n\n仍可访问\n'.encode('gbk')
+        for name in sorted(info['ID'].keys(), key=lambda x: info['ID'][x], reverse=True):
+            print '\n', "%-24s  %d" % (name.encode('GBK'), info['ID'][name])
+        print u'\n\n已不可更新'.encode('gbk')
+        for name in sorted(info['CLOSED'].keys(), key=lambda x: info['CLOSED'][x]):
+            print '\n', "%-24s  %d" % (name.encode('GBK'), info['CLOSED'][name])
     else:
         try:
             print channel_name + ' ' + str(info['ID'][channel_name.decode('gbk')])
