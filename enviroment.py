@@ -14,6 +14,8 @@
 2017.9.20
 1.增加operate_sql函数有关MySQL的异常处理
 2.增加get_same_info函数requests请求的异常处理
+2017.10.31
+不知道print sql出现的IOError:[Error 0]是什么错误，只能先用异常处理语句将其避开
 """
 import json
 import random
@@ -97,7 +99,10 @@ def operate_sql(db, sql):
     except MySQLdb.Error, e:
         try:
             print "Error %d:%s" % (e.args[0], e.args[1])
-            print sql
+            try:
+                print sql
+            except IOError:
+                pass
         except IndexError:
             print "MySQL Error:%s" % str(e)
             print sql
