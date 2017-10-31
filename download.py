@@ -15,6 +15,8 @@
 创建用户图片保存文件夹也可以使用中文名
 2017.10.23
 设置文件保存路径最多100个字符
+2017.10.31
+根据用户下载图片的筛选条件由likes>30改为likes>20
 """
 from multiprocessing import Pool
 import os
@@ -31,7 +33,7 @@ def download_by_user(user_list):
         response = enviroment.get_same_info(url)
         while 'next' in response.json()['data']:
             for text in response.json()['data']['results']:
-                if text['likes'] > 30:
+                if text['likes'] > 20:
                     total_info.append([text['id'], text['channel_id'], text['photo']])
             next_url = 'https://v2.same.com' + response.json()['data']['next']
             response = enviroment.get_same_info(next_url)
