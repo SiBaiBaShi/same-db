@@ -52,7 +52,7 @@ def get_same_info(url):
     while status:
         try:
             response = requests.get(url=url)
-        except requests.ConnectionError as e:
+        except requests.ConnectionError:
             y = os.system('taskkill /F /IM Shadowsocks.exe')
             winsound.Beep(233, 3000)
             time.sleep(7)
