@@ -20,12 +20,15 @@
 1.发现向same服务器发送请求根本不需要构造header，删除
 2.若出现ConnectionError，调用winsound库发出声音提醒更换IP
 3.引起ConnectionError的原因可能是发送的数据包要求“keep-alive”，因此构造headers要求连接关闭
+4.若出现ConnectionError，采用打开/关闭Shadowsocks.exe的方式解决，但某些时刻仍然出现此问题
 """
 import json
+import os
 import time
 
 import requests
 import MySQLdb
+import win32api
 import winsound
 
 
@@ -47,15 +50,16 @@ def get_info(key):
 def get_same_info(url):
     status = 1
     while status:
-        header = {
-            'Connection': 'close'
-        }
         try:
-            response = requests.get(url=url, headers=header)
+            response = requests.get(url=url)
         except requests.ConnectionError as e:
-            print e
+            y = os.system('taskkill /F /IM Shadowsocks.exe')
             winsound.Beep(233, 3000)
-            time.sleep(10)
+            time.sleep(7)
+            if y:
+                win32api.ShellExecute(0, 'open',
+                                      u'C:\Application\Shadowsocks\备份\shadowsocks\Shadowsocks.exe'
+                                      .encode('gbk'), '', '', 0)
         except requests.HTTPError, e:
             print e
             time.sleep(0.1)
