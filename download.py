@@ -17,6 +17,8 @@
 设置文件保存路径最多100个字符
 2017.10.31
 根据用户下载图片的筛选条件由likes>30改为likes>20
+2017.11.1
+修改download_by_user函数，增加对用户可能不存在及其它异常的处理
 """
 from multiprocessing import Pool
 import os
@@ -31,17 +33,25 @@ def download_by_user(user_list):
         total_info = []
         url = 'https://v2.same.com/user/' + user_id + '/senses'
         response = enviroment.get_same_info(url)
-        while 'next' in response.json()['data']:
+        try:
+            while 'next' in response.json()['data']:
+                for text in response.json()['data']['results']:
+                    if text['likes'] > 20:
+                        total_info.append([text['id'], text['channel_id'], text['photo']])
+                next_url = 'https://v2.same.com' + response.json()['data']['next']
+                response = enviroment.get_same_info(next_url)
             for text in response.json()['data']['results']:
-                if text['likes'] > 20:
-                    total_info.append([text['id'], text['channel_id'], text['photo']])
-            next_url = 'https://v2.same.com' + response.json()['data']['next']
-            response = enviroment.get_same_info(next_url)
-        for text in response.json()['data']['results']:
-            total_info.append([text['id'], text['channel_id'], text['photo']])
-        name = response.json()['data']['results'][0]['user']['username']
-        path = enviroment.get_info('USER_PATH') + user_id + '-' + name + '\\'
-        download(total_info, path)
+                total_info.append([text['id'], text['channel_id'], text['photo']])
+            name = response.json()['data']['results'][0]['user']['username']
+        except IndexError:
+            pass
+        except KeyError:
+            pass
+        except IOError:
+            pass
+        else:
+            path = enviroment.get_info('USER_PATH') + user_id + '-' + name + '\\'
+            download(total_info, path)
 
 
 def download_by_channel(c, w, p):
