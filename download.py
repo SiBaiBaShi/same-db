@@ -18,7 +18,7 @@
 2017.10.31
 根据用户下载图片的筛选条件由likes>30改为likes>20
 2017.11.1
-修改download_by_user函数，增加对用户可能不存在及其它异常的处理
+修改download_by_user函数，增加对用户可能不存在的情况及其它异常的处理
 """
 from multiprocessing import Pool
 import os
