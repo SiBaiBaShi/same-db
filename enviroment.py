@@ -21,15 +21,18 @@
 2.若出现ConnectionError，调用winsound库发出声音提醒更换IP
 3.引起ConnectionError的原因可能是发送的数据包要求“keep-alive”，因此构造headers要求连接关闭
 4.若出现ConnectionError，采用打开/关闭Shadowsocks.exe的方式解决，但某些时刻仍然出现此问题
+2017.11.3
+实际上用打开/关闭Shadowsocks.exe的方式是可以解决问题的，只是之前信息反馈得不好：
+Beep在sleep之前，所以响铃后后立刻查看会发现还是没连接上，而实际上这只是程序在sleep
 """
 import json
-import os
 import time
+from os import system
 
 import requests
 import MySQLdb
-import win32api
-import winsound
+from win32api import ShellExecute
+from winsound import Beep
 
 
 INFO = r'C:\Users\root\Pictures\same\document\info.json'
@@ -53,13 +56,14 @@ def get_same_info(url):
         try:
             response = requests.get(url=url)
         except requests.ConnectionError:
-            y = os.system('taskkill /F /IM Shadowsocks.exe')
-            winsound.Beep(233, 3000)
-            time.sleep(7)
+            y = system('taskkill /F /IM Shadowsocks.exe')
             if y:
-                win32api.ShellExecute(0, 'open',
-                                      u'C:\Application\Shadowsocks\备份\shadowsocks\Shadowsocks.exe'
-                                      .encode('gbk'), '', '', 0)
+                ShellExecute(0, 'open',
+                             u'C:\Application\Shadowsocks\备份\shadowsocks\Shadowsocks.exe'
+                             .encode('gbk'), '', '', 0)
+            print time.asctime(time.localtime(time.time())), '\n'
+            time.sleep(17)
+            Beep(233, 3000)
         except requests.HTTPError, e:
             print e
             time.sleep(0.1)
