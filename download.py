@@ -23,7 +23,7 @@
 from multiprocessing import Pool
 import os
 
-import MySQLdb
+from MySQLdb import connect
 
 import enviroment
 
@@ -101,11 +101,11 @@ def download_by_channel(c, w, p):
 
 def get_download_info(channel_list, where):
     total_download_info = {}
-    db = MySQLdb.connect(enviroment.get_info('DB_INFO')['host'],
-                         enviroment.get_info('DB_INFO')['user'],
-                         enviroment.get_info('DB_INFO')['password'],
-                         enviroment.get_info('DB_INFO')['database'],
-                         charset=enviroment.get_info('DB_INFO')['charset'])
+    db = connect(enviroment.get_info('DB_INFO')['host'],
+                 enviroment.get_info('DB_INFO')['user'],
+                 enviroment.get_info('DB_INFO')['password'],
+                 enviroment.get_info('DB_INFO')['database'],
+                 charset=enviroment.get_info('DB_INFO')['charset'])
     for i, channel in enumerate(channel_list):
         try:
             channel_id = enviroment.get_info('ID')[channel]

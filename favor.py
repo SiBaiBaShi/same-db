@@ -1,7 +1,7 @@
 # _*_ coding: UTF-8 _*_
 import os
 
-import MySQLdb
+from MySQLdb import connect
 
 import enviroment
 
@@ -18,11 +18,11 @@ def get_favor_list(path):
         if os.path.isdir(path+'\\'+files):
             total += len(os.listdir(path+'\\'+files))
 
-    db = MySQLdb.connect(enviroment.get_info('DB_INFO')['host'],
-                         enviroment.get_info('DB_INFO')['user'],
-                         enviroment.get_info('DB_INFO')['password'],
-                         enviroment.get_info('DB_INFO')['database'],
-                         charset=enviroment.get_info('DB_INFO')['charset'])
+    db = connect(enviroment.get_info('DB_INFO')['host'],
+                 enviroment.get_info('DB_INFO')['user'],
+                 enviroment.get_info('DB_INFO')['password'],
+                 enviroment.get_info('DB_INFO')['database'],
+                 charset=enviroment.get_info('DB_INFO')['charset'])
     for files in os.listdir(path):
         if os.path.isdir(path+'\\'+files):
             for jpg in os.listdir(path+'\\'+files):
