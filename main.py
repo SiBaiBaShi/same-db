@@ -4,6 +4,8 @@
 增加下载特定用户图片功能，命令行提示符为“-du”，可批量下载，图片保存路径固定为environment.USER_PATH
 2017.9.19
 增加预设频道信息的增删改查功能
+2017.11.8
+支持对多个频道进行更新，而若要更新全部频道和用户，则需输入“all”
 """
 import argparse
 
@@ -42,7 +44,7 @@ if __name__ == '__main__':
     parser.add_argument('-bd', nargs='?', default=False,
                         help=u'build database,建立数据库'
                         .encode('GBK'))
-    parser.add_argument('-ud', nargs='?', const='all', default=False,
+    parser.add_argument('-ud', nargs='*', default=False,
                         help=u'update database,更新数据库；无参数则更新所有频道'
                         .encode('GBK'))
     parser.add_argument('-uf', nargs='?', default=False,
